@@ -1,0 +1,50 @@
+#include <stdio.h>
+
+int calls = 0;
+
+int verify_card(int card)
+{
+    calls++;
+    return card;
+}
+
+int main()
+{
+    int senior[1000], eligible[1000], card[1000];
+    int result;
+
+    for(int i = 0; i < 1000; i++)
+    {
+        senior[i] = (i % 2 == 0);
+        eligible[i] = (i % 3 != 0);
+        card[i] = (i % 5 == 0);
+    }
+
+    for(int i = 0; i < 1000; i++)
+    {
+        result = (senior[i] && eligible[i]) ||
+                 verify_card(card[i]);
+    }
+
+    printf("Calls with condition first = %d\n", calls);
+
+    calls = 0;
+
+    for(int i = 0; i < 1000; i++)
+    {
+        result = verify_card(card[i]) ||
+                 (senior[i] && eligible[i]);
+    }
+
+    printf("Calls with verification first = %d\n", calls);
+
+    calls = 0;
+    result = 0 && verify_card(1);
+    printf("Calls using && = %d\n", calls);
+
+    calls = 0;
+    result = 0 & verify_card(1);
+    printf("Calls using & = %d\n", calls);
+
+    return 0;
+}
