@@ -1,0 +1,43 @@
+#include <stdio.h>
+
+unsigned long checks = 0;
+
+int improved_prime(unsigned long n)
+{
+    checks = 0;
+
+    if(n < 2)
+        return 0;
+
+    if(n == 2)
+        return 1;
+
+    checks++;
+
+    if(n % 2 == 0)
+        return 0;
+
+    for(unsigned long i = 3; i <= n / i; i += 2)
+    {
+        checks++;
+
+        if(n % i == 0)
+            return 0;
+    }
+
+    return 1;
+}
+
+int main()
+{
+    unsigned long number = 1000003;
+
+    if(improved_prime(number))
+        printf("%lu is Prime\n", number);
+    else
+        printf("%lu is Not Prime\n", number);
+
+    printf("Number of checks = %lu\n", checks);
+
+    return 0;
+}
